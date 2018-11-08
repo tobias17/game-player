@@ -5,7 +5,8 @@
 #include <QSignalMapper>
 #include <QWidget>
 #include <QPushButton>
-#include "TicTacToeSettings.h"
+
+#include "NPlayerTTTSettings.h"
 
 #define PLAYER_1_CHAR	"X"
 #define PLAYER_2_CHAR	"O"

@@ -1,6 +1,6 @@
 //*****************************************************************************
 //Includes
-#include "TicTacToeGame.h"
+#include "NPlayerTTTGame.h"
 
 TicTacToeGame::TicTacToeGame(TicTacToeSettings_t aSetting) : QWidget(0) {
 	signalMapper = new QSignalMapper;

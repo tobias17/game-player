@@ -1,6 +1,6 @@
 //*****************************************************************************
 //Includes
-#include "TicTacToeSettings.h"
+#include "NPlayerTTTSettings.h"
 
 TicTacToeSettingsWindow::TicTacToeSettingsWindow() : QWidget(0) {
 	squareCountEdit = new QLineEdit(this);
