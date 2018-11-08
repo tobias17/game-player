@@ -11,27 +11,27 @@
 //*****************************************************************************
 //Defines
 
-struct TicTacToeSettings_t {
+struct NPlayerTTTSettings_t {
 	int squareCount = 3;
 	int squaresToWin = 3;
 	int squareSize = 100;
 	int gapSize = 8;
 };
 
-class TicTacToeSettingsWindow : public QWidget {
+class NPlayerTTTSettingsWindow : public QWidget {
 	Q_OBJECT
 public:
-	TicTacToeSettingsWindow();
+	NPlayerTTTSettingsWindow();
 //	TicTacToeSettingsWindow(TicTacToeSettings_t);
-	void setSettings(TicTacToeSettings_t);
+	void setSettings(NPlayerTTTSettings_t);
 signals:
-	void sendTicTacToeSettings(TicTacToeSettings_t);
+	void sendTicTacToeSettings(NPlayerTTTSettings_t);
 private slots:
 	void saveButtonHandler();
 	void closeButtonHandler();
 private:
 	void showError(QString);
-	TicTacToeSettings_t settings;
+	NPlayerTTTSettings_t settings;
 	QLineEdit* squareCountEdit;
 	QLineEdit* squaresToWinEdit;
 	QLineEdit* squareSizeEdit;

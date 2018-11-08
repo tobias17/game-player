@@ -39,11 +39,11 @@ static const char qt_meta_stringdata_TicTacToeGame[] = {
     "TicTacToeGame\0\0id\0boardButtonHandler(int)\0"
 };
 
-void TicTacToeGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void NPlayerTTTGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
-        TicTacToeGame *_t = static_cast<TicTacToeGame *>(_o);
+        NPlayerTTTGame *_t = static_cast<NPlayerTTTGame *>(_o);
         switch (_id) {
         case 0: _t->boardButtonHandler((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
@@ -51,33 +51,33 @@ void TicTacToeGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     }
 }
 
-const QMetaObjectExtraData TicTacToeGame::staticMetaObjectExtraData = {
+const QMetaObjectExtraData NPlayerTTTGame::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject TicTacToeGame::staticMetaObject = {
+const QMetaObject NPlayerTTTGame::staticMetaObject = {
     { &QWidget::staticMetaObject, qt_meta_stringdata_TicTacToeGame,
       qt_meta_data_TicTacToeGame, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &TicTacToeGame::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &NPlayerTTTGame::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *TicTacToeGame::metaObject() const
+const QMetaObject *NPlayerTTTGame::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *TicTacToeGame::qt_metacast(const char *_clname)
+void *NPlayerTTTGame::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_TicTacToeGame))
-        return static_cast<void*>(const_cast< TicTacToeGame*>(this));
+        return static_cast<void*>(const_cast< NPlayerTTTGame*>(this));
     return QWidget::qt_metacast(_clname);
 }
 
-int TicTacToeGame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int NPlayerTTTGame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)

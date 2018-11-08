@@ -2,7 +2,7 @@
 //Includes
 #include "NPlayerTTTGame.h"
 
-TicTacToeGame::TicTacToeGame(TicTacToeSettings_t aSetting) : QWidget(0) {
+NPlayerTTTGame::NPlayerTTTGame(NPlayerTTTSettings_t aSetting) : QWidget(0) {
 	signalMapper = new QSignalMapper;
 	settings = aSetting;
 	int size = settings.squareCount;
@@ -32,7 +32,7 @@ TicTacToeGame::TicTacToeGame(TicTacToeSettings_t aSetting) : QWidget(0) {
 	this->setWindowTitle("Tic Tac Toe");
 }
 
-void TicTacToeGame::makeMove(int id, int player) {
+void NPlayerTTTGame::makeMove(int id, int player) {
 	if (player != playerTurn) return;
 
 	board[id%settings.squareCount][id/settings.squareCount] = player;
@@ -68,7 +68,7 @@ void TicTacToeGame::makeMove(int id, int player) {
 	}
 }
 
-void TicTacToeGame::boardButtonHandler(int id) {
+void NPlayerTTTGame::boardButtonHandler(int id) {
 
 	if (playerTurn == player1 && isPlayer1Human) {
 		makeMove(id, player1);
@@ -77,7 +77,7 @@ void TicTacToeGame::boardButtonHandler(int id) {
 	}
 }
 
-int TicTacToeGame::getWinner() {
+int NPlayerTTTGame::getWinner() {
 	int size = settings.squareCount;
 	QPoint dirs[4] = { QPoint(1, 0), QPoint(1, 1), QPoint(0, 1), QPoint(-1, 1) };
 	bool hasAnEmpty = false;

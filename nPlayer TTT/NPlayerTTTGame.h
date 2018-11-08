@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class TicTacToeGame : public QWidget {
+class NPlayerTTTGame : public QWidget {
 	Q_OBJECT
 public:
 //	TicTacToeGame();
-	TicTacToeGame(TicTacToeSettings_t);
+	NPlayerTTTGame(NPlayerTTTSettings_t);
 private slots:
 	void boardButtonHandler(int id);
 private:
@@ -28,7 +28,7 @@ private:
 	int playerTurn = player1;
 	bool isPlayer1Human = true;
 	bool isPlayer2Human = true;
-	TicTacToeSettings_t settings;
+	NPlayerTTTSettings_t settings;
 	vector<QPushButton*> buttons;
 	QMessageBox* messageBox;
 	int** board;

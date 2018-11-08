@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 	p2List->setCurrentRow(0);
 
 	tttSettingsWindow = new TicTacToeSettingsWindow();
-	connect(tttSettingsWindow, SIGNAL (sendTicTacToeSettings(TicTacToeSettings_t)), this, SLOT (receiveTicTacToeSettings(TicTacToeSettings_t)));
+	connect(tttSettingsWindow, SIGNAL (sendTicTacToeSettings(NPlayerTTTSettings_t)), this, SLOT (receiveTicTacToeSettings(NPlayerTTTSettings_t)));
 
 	this->setFixedSize(GAP_SIZE*4 + ITEM_WIDTH*3, GAP_SIZE*4 + LIST_HEIGHT + BUTTON_HEIGHT*2);
 

@@ -2,7 +2,7 @@
 //Includes
 #include "NPlayerTTTSettings.h"
 
-TicTacToeSettingsWindow::TicTacToeSettingsWindow() : QWidget(0) {
+NPlayerTTTSettingsWindow::NPlayerTTTSettingsWindow() : QWidget(0) {
 	squareCountEdit = new QLineEdit(this);
 	squaresToWinEdit = new QLineEdit(this);
 	squareSizeEdit = new QLineEdit(this);
@@ -56,7 +56,7 @@ TicTacToeSettingsWindow::TicTacToeSettingsWindow() : QWidget(0) {
 	this->setWindowTitle("Tic Tac Toe Settings");
 }
 
-void TicTacToeSettingsWindow::setSettings(TicTacToeSettings_t aSetting) {
+void NPlayerTTTSettingsWindow::setSettings(NPlayerTTTSettings_t aSetting) {
 	settings = aSetting;
 	squareCountEdit->setText(QString::number(settings.squareCount));
 	squaresToWinEdit->setText(QString::number(settings.squaresToWin));
@@ -64,8 +64,8 @@ void TicTacToeSettingsWindow::setSettings(TicTacToeSettings_t aSetting) {
 	gapSizeEdit->setText(QString::number(settings.gapSize));
 }
 
-void TicTacToeSettingsWindow::saveButtonHandler() {
-	TicTacToeSettings_t newSettings;
+void NPlayerTTTSettingsWindow::saveButtonHandler() {
+	NPlayerTTTSettings_t newSettings;
 	bool ok;
 
 	newSettings.squareCount = squareCountEdit->text().toInt(&ok);
@@ -112,11 +112,11 @@ void TicTacToeSettingsWindow::saveButtonHandler() {
 	emit sendTicTacToeSettings(newSettings);
 }
 
-void TicTacToeSettingsWindow::closeButtonHandler() {
+void NPlayerTTTSettingsWindow::closeButtonHandler() {
 	this->hide();
 }
 
-void TicTacToeSettingsWindow::showError(QString text) {
+void NPlayerTTTSettingsWindow::showError(QString text) {
 	messageBox->setText(text);
 	messageBox->exec();
 }
