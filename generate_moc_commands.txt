@@ -1,6 +1,6 @@
 cd Desktop/game-player/
 
 moc -o moc_MainWindow.cpp MainWindow.h
-moc -o TicTacToe/moc_TicTacToeGame.cpp TicTacToe/TicTacToeGame.h
+moc -o TicTacToe/moc_TicTacToeGameWindow.cpp TicTacToe/TicTacToeGameWindow.h
 moc -o TicTacToe/moc_TicTacToeSettings.cpp TicTacToe/TicTacToeSettings.h
 

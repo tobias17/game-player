@@ -10,7 +10,7 @@
 #include <QThread>
 #include <QLabel>
 #include <QPushButton>
-#include "TicTacToe/TicTacToeGame.h"
+#include "TicTacToe/TicTacToeGameWindow.h"
 #include "WindowConstants.h"
 
 //*****************************************************************************

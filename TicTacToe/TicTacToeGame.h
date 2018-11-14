@@ -1,34 +1,23 @@
 //*****************************************************************************
 //Includes
-#include <iostream>
-#include <vector>
-#include <QSignalMapper>
-#include <QWidget>
-#include <QPushButton>
 #include "TicTacToeSettings.h"
-
-#define PLAYER_1_CHAR	"X"
-#define PLAYER_2_CHAR	"O"
+#include "../Game.h"
 
 using namespace std;
 
-class TicTacToeGame : public QWidget {
-	Q_OBJECT
+class TicTacToeGame : public Game {
 public:
-//	TicTacToeGame();
 	TicTacToeGame(TicTacToeSettings_t);
-private slots:
-	void boardButtonHandler(int id);
-private:
 	int getWinner();
-	void makeMove(int id, int player);
-	QSignalMapper* signalMapper;
+	bool makeMove(int id, int player);
+	bool makeMove(int x, int y, int player);
+	vector<int> getPossibleMoves();
+	int getPlayerTurn() { return playerTurn; };
+	int getSquare(int x, int y) { return board[x][y]; };
+	TicTacToeSettings_t getSettings() { return settings; };
 	enum Players { none, player1, player2, tie };
+private:
 	int playerTurn = player1;
-	bool isPlayer1Human = true;
-	bool isPlayer2Human = true;
 	TicTacToeSettings_t settings;
-	vector<QPushButton*> buttons;
-	QMessageBox* messageBox;
 	int** board;
 };
