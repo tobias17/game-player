@@ -8,7 +8,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 	games.push_back("Tic Tac Toe");
 
-	players.push_back("Human");
+	engines.push_back("Human");
+	engines.push_back("Random Moves");
+	engines.push_back("Naive Tree Search");
 
 	gameList = new QListWidget(this);
 	gameList->setGeometry(QRect(QPoint(GAP_SIZE, GAP_SIZE), QSize(ITEM_WIDTH, LIST_HEIGHT)));
@@ -44,16 +46,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 	}
 	gameList->setCurrentRow(0);
 
-	for (uint i = 0; i < players.size(); i++) {
+	for (uint i = 0; i < engines.size(); i++) {
 		QListWidgetItem* listItem = new QListWidgetItem;
-		listItem->setText(players.at(i));
+		listItem->setText(engines.at(i));
 		p1List->addItem(listItem);
 	}
 	p1List->setCurrentRow(0);
 
-	for (uint i = 0; i < players.size(); i++) {
+	for (uint i = 0; i < engines.size(); i++) {
 		QListWidgetItem* listItem = new QListWidgetItem;
-		listItem->setText(players.at(i));
+		listItem->setText(engines.at(i));
 		p2List->addItem(listItem);
 	}
 	p2List->setCurrentRow(0);
@@ -76,15 +78,44 @@ void MainWindow::receiveTicTacToeSettings(TicTacToeSettings_t aSetting) {
 }
 
 void MainWindow::p1SettingsButtonHandler() {
-	cout << "2" << endl;
+	switch (p1List->currentRow()) {
+	case 1:
+		randomMoveEngineSettingsControllers[p1Index].showWindow(); break;
+	default:
+		break;
+	}
 }
 
 void MainWindow::p2SettingsButtonHandler() {
-	cout << "3" << endl;
+	switch (p2List->currentRow()) {
+	case 1:
+		randomMoveEngineSettingsControllers[p2Index].showWindow(); break;
+	default:
+		break;
+	}
 }
 
 void MainWindow::startGameButtonHandler() {
-	TicTacToeGameWindow* game = new TicTacToeGameWindow(tttSettings);
+	NaiveTreeSearchEngineSettings_t s;
+	Engine* e1;
+	switch (p1List->currentRow()) {
+	case 1:
+		e1 = new RandomMoveEngine(randomMoveEngineSettingsControllers[p1Index].getSettings()); break;
+	case 2:
+		e1 = new NaiveTreeSearchEngine(s); break;
+	default:
+		e1 = new HumanEngine; break;
+	}
+	Engine* e2;
+	switch (p2List->currentRow()) {
+	case 1:
+		e2 = new RandomMoveEngine(randomMoveEngineSettingsControllers[p2Index].getSettings()); break;
+	case 2:
+		e2 = new NaiveTreeSearchEngine(s); break;
+	default:
+		e2 = new HumanEngine; break;
+	}
+	TicTacToeGameWindow* game = new TicTacToeGameWindow(tttSettings, e1, e2);
 	game->show();
 }
 

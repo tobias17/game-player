@@ -12,12 +12,13 @@ public:
 	bool makeMove(int id, int player);
 	bool makeMove(int x, int y, int player);
 	vector<int> getPossibleMoves();
-	int getPlayerTurn() { return playerTurn; };
+	Game* copy();
+	void setBoard(int** aBoard);
+	void setPlayerTurn(int aPlayerTurn) { playerTurn = aPlayerTurn; };
 	int getSquare(int x, int y) { return board[x][y]; };
 	TicTacToeSettings_t getSettings() { return settings; };
-	enum Players { none, player1, player2, tie };
+	void dispBoard();
 private:
-	int playerTurn = player1;
 	TicTacToeSettings_t settings;
 	int** board;
 };

@@ -1,6 +1,9 @@
 cd Desktop/game-player/
 
 moc -o moc_MainWindow.cpp MainWindow.h
+moc -o moc_GeneralSettingsWindow.cpp GeneralSettingsWindow.h
+moc -o Engines/moc_EngineHandler.cpp Engines/EngineHandler.h
 moc -o TicTacToe/moc_TicTacToeGameWindow.cpp TicTacToe/TicTacToeGameWindow.h
 moc -o TicTacToe/moc_TicTacToeSettings.cpp TicTacToe/TicTacToeSettings.h
-
+moc -o Engines/RandomMoveEngine/moc_RandomMoveEngineSettings.cpp Engines/RandomMoveEngine/RandomMoveEngineSettings.h
+moc -o Engines/NaiveTreeSearchEngine/moc_RandomMoveEngineSettings.cpp Engines/NaiveTreeSearchEngine/RandomMoveEngineSettings.h

@@ -10,7 +10,26 @@ TicTacToeGame::TicTacToeGame(TicTacToeSettings_t aSetting) {
 
 	for (int y = 0; y < size; y++) {
 		for (int x = 0; x < size; x++) {
-			board[x][y] = none;
+			board[x][y] = Game::none;
+		}
+	}
+}
+
+Game* TicTacToeGame::copy() {
+	TicTacToeGame* newGame = new TicTacToeGame(settings);
+	newGame->setBoard(board);
+	newGame->setPlayerTurn(playerTurn);
+	return (Game*) newGame;
+}
+
+void TicTacToeGame::setBoard(int** aBoard) {
+	int size = settings.squareCount;
+	board = new int*[size];
+	for (int x = 0; x < size; x++) board[x] = new int[size];
+
+	for (int y = 0; y < size; y++) {
+		for (int x = 0; x < size; x++) {
+			board[x][y] = aBoard[x][y];
 		}
 	}
 }
@@ -24,11 +43,16 @@ bool TicTacToeGame::makeMove(int x, int y, int player) {
 
 	board[x][y] = player;
 
-	if (playerTurn == player1) {
-		playerTurn = player2;
-	} else if (playerTurn == player2) {
-		playerTurn = player1;
+	if (playerTurn == Game::player1) {
+		playerTurn = Game::player2;
+	} else if (playerTurn == Game::player2) {
+		playerTurn = Game::player1;
 	}
+
+	if (getWinner() != Game::none) {
+		playerTurn = Game::none;
+	}
+
 	return true;
 }
 
@@ -40,7 +64,7 @@ int TicTacToeGame::getWinner() {
 	for (int x = 0; x < size; x++) {
 		for (int y = 0; y < size; y++) {
 			for (int i = 0; i < 4; i++) {
-				if (board[x][y] == none) hasAnEmpty = true;
+				if (board[x][y] == Game::none) hasAnEmpty = true;
 				QPoint dir = dirs[i];
 				int dx = 0;
 				int dy = 0;
@@ -54,7 +78,7 @@ int TicTacToeGame::getWinner() {
 					}
 					if (board[x+dx][y+dy] == player) {
 						streak++;
-						if (player != none && streak == settings.squaresToWin) {
+						if (player != Game::none && streak == settings.squaresToWin) {
 							return player;
 						}
 					} else {
@@ -66,17 +90,27 @@ int TicTacToeGame::getWinner() {
 		}
 	}
 	if (!hasAnEmpty) return tie;
-	return none;
+	return Game::none;
 }
 
 vector<int> TicTacToeGame::getPossibleMoves() {
 	vector<int> v;
+	for (int y = 0; y < settings.squareCount; y++) {
+		for (int x = 0; x < settings.squareCount; x++) {
+			if (board[x][y] == Game::none) {
+				v.push_back(x + y*settings.squareCount);
+			}
+		}
+	}
 	return v;
 }
 
-//int TicTacToeGame::getWinner() {
-//	return none;
-//}
-
-
+void TicTacToeGame::dispBoard() {
+	for (int y = 0; y < settings.squareCount; y++) {
+		for (int x = 0; x < settings.squareCount; x++) {
+			cout << ((board[x][y] == 0) ? "-" : (board[x][y] == 1) ? "X" : "O");
+		}
+		cout << endl;
+	}
+}
 

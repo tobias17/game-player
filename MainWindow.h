@@ -10,8 +10,9 @@
 #include <QThread>
 #include <QLabel>
 #include <QPushButton>
-#include "TicTacToe/TicTacToeGameWindow.h"
 #include "WindowConstants.h"
+#include "TicTacToe/TicTacToeGameWindow.h"
+#include "Engines/NaiveTreeSearch/NaiveTreeSearchEngine.h"
 
 //*****************************************************************************
 //Defines
@@ -28,6 +29,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 public:
 	explicit MainWindow(QWidget *parent = 0);
+	enum PlayerIndexes { p1Index = 0, p2Index };
 private slots:
 	void gameSettingsButtonHandler();
 	void receiveTicTacToeSettings(TicTacToeSettings_t);
@@ -43,11 +45,13 @@ private:
 	QPushButton* p2SettingsButton;
 	QPushButton* startGameButton;
 	vector<QString> games;
-	vector<QString> players;
+	vector<QString> engines;
 //	vector<QThread> threads;
 
 	TicTacToeSettings_t tttSettings;
 	TicTacToeSettingsWindow* tttSettingsWindow;
+
+	RandomMoveEngineSettingsController randomMoveEngineSettingsControllers[2];
 };
 
 //*****************************************************************************
