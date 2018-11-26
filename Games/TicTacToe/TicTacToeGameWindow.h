@@ -7,8 +7,8 @@
 #include <QPushButton>
 #include <QThread>
 #include "TicTacToeGame.h"
-#include "../Engines/EngineHandler.h"
-#include "../Engines/RandomMoveEngine/RandomMoveEngine.h"
+#include "../../Engines/EngineHandler.h"
+#include "../../Engines/RandomMoveEngine/RandomMoveEngine.h"
 
 #define PLAYER_1_CHAR	"X"
 #define PLAYER_2_CHAR	"O"

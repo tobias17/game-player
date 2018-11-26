@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <QThread>
-#include "../Game.h"
+#include "../Games/Game.h"
 
 class Engine {
 public:

@@ -60,3 +60,9 @@ void GeneralSettingsWindow::saveButtonHandler() {
 void GeneralSettingsWindow::closeButtonHandler() {
 	this->close();
 }
+
+void GeneralSettingsWindow::receiveCloseWindow() {
+	this->close();
+}
+
+

@@ -11,6 +11,7 @@ RandomMoveEngineSettingsController::RandomMoveEngineSettingsController() : QObje
 
 	settingsWindow = new GeneralSettingsWindow(names, values, "Random Move Engine Settings");
 	connect(settingsWindow, SIGNAL (sendSettings(vector<QString>)), this, SLOT (receiveSettings(vector<QString>)));
+	connect(this, SIGNAL (sendCloseWindow()), settingsWindow, SLOT (receiveCloseWindow()));
 }
 
 void RandomMoveEngineSettingsController::showWindow() {
@@ -21,9 +22,26 @@ void RandomMoveEngineSettingsController::showWindow() {
 }
 
 void RandomMoveEngineSettingsController::receiveSettings(vector<QString> values) {
+	RandomMoveEngineSettings_t newSettings;
+	bool ok;
+
 	if (values.size() != 1) {
 		settingsWindow->showError("Incorrect number of values passed back from Random Move Engine Settings");
 		return;
 	}
-	settings.moveDelay_ms = values.at(0).toInt();
+
+	newSettings.moveDelay_ms = values.at(0).toInt(&ok);
+	if (!ok) {
+		settingsWindow->showError("Error converting Move Delay to Integer");
+		return;
+	}
+
+	if (newSettings.moveDelay_ms < 0) {
+		settingsWindow->showError("Move Delay out of range");
+		return;
+	}
+
+	settings = newSettings;
+	emit sendCloseWindow();
 }
+

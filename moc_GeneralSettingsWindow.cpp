@@ -22,7 +22,7 @@ static const uint qt_meta_data_GeneralSettingsWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,8 +33,9 @@ static const uint qt_meta_data_GeneralSettingsWindow[] = {
       23,   22,   22,   22, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      53,   22,   22,   22, 0x08,
-      73,   22,   22,   22, 0x08,
+      53,   22,   22,   22, 0x0a,
+      74,   22,   22,   22, 0x08,
+      94,   22,   22,   22, 0x08,
 
        0        // eod
 };
@@ -42,7 +43,8 @@ static const uint qt_meta_data_GeneralSettingsWindow[] = {
 static const char qt_meta_stringdata_GeneralSettingsWindow[] = {
     "GeneralSettingsWindow\0\0"
     "sendSettings(vector<QString>)\0"
-    "saveButtonHandler()\0closeButtonHandler()\0"
+    "receiveCloseWindow()\0saveButtonHandler()\0"
+    "closeButtonHandler()\0"
 };
 
 void GeneralSettingsWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,8 +54,9 @@ void GeneralSettingsWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c
         GeneralSettingsWindow *_t = static_cast<GeneralSettingsWindow *>(_o);
         switch (_id) {
         case 0: _t->sendSettings((*reinterpret_cast< vector<QString>(*)>(_a[1]))); break;
-        case 1: _t->saveButtonHandler(); break;
-        case 2: _t->closeButtonHandler(); break;
+        case 1: _t->receiveCloseWindow(); break;
+        case 2: _t->saveButtonHandler(); break;
+        case 3: _t->closeButtonHandler(); break;
         default: ;
         }
     }
@@ -91,9 +94,9 @@ int GeneralSettingsWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

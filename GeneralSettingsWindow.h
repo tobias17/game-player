@@ -20,6 +20,8 @@ public:
 	GeneralSettingsWindow(vector<QString> names, vector<QString> values, QString windowTitle);
 	void showError(QString);
 	void updateValues(vector<QString>);
+public slots:
+	void receiveCloseWindow();
 signals:
 	void sendSettings(vector<QString>);
 private slots:

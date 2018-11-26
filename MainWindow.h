@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef MAIN_WINDOW_H_
+#define MAIN_WINDOW_H_
 
 //*****************************************************************************
 //Includes
@@ -11,17 +11,14 @@
 #include <QLabel>
 #include <QPushButton>
 #include "WindowConstants.h"
-#include "TicTacToe/TicTacToeGameWindow.h"
+#include "Games/TicTacToe/TicTacToeGameWindow.h"
+#include "Engines/RandomMoveEngine/RandomMoveEngine.h"
 #include "Engines/NaiveTreeSearch/NaiveTreeSearchEngine.h"
 
 //*****************************************************************************
 //Defines
 #define GAME_COUNT 1
 
-//namespace Ui
-//{
-//	class MainWindow;
-//}
 using namespace std;
 
 class MainWindow : public QMainWindow
@@ -32,11 +29,11 @@ public:
 	enum PlayerIndexes { p1Index = 0, p2Index };
 private slots:
 	void gameSettingsButtonHandler();
-	void receiveTicTacToeSettings(TicTacToeSettings_t);
 	void p1SettingsButtonHandler();
 	void p2SettingsButtonHandler();
 	void startGameButtonHandler();
 private:
+	void generalSettingsHandler(int index);
 	QListWidget* gameList;
 	QListWidget* p1List;
 	QListWidget* p2List;
@@ -46,14 +43,15 @@ private:
 	QPushButton* startGameButton;
 	vector<QString> games;
 	vector<QString> engines;
-//	vector<QThread> threads;
 
-	TicTacToeSettings_t tttSettings;
-	TicTacToeSettingsWindow* tttSettingsWindow;
+	// games
+	TicTacToeSettingsController ticTacToeSettingsController;
 
+	// engines
 	RandomMoveEngineSettingsController randomMoveEngineSettingsControllers[2];
+	NaiveTreeSearchEngineSettingsController naiveTreeSearchEngineSettingsControllers[2];
 };
 
 //*****************************************************************************
 
-#endif /* MAINWINDOW_H_ */
+#endif /* MAIN_WINDOW_H_ */

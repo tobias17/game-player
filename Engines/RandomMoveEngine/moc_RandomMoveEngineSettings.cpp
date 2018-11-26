@@ -22,22 +22,25 @@ static const uint qt_meta_data_RandomMoveEngineSettingsController[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      36,   35,   35,   35, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      36,   35,   35,   35, 0x0a,
+      54,   35,   35,   35, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RandomMoveEngineSettingsController[] = {
     "RandomMoveEngineSettingsController\0\0"
-    "receiveSettings(vector<QString>)\0"
+    "sendCloseWindow()\0receiveSettings(vector<QString>)\0"
 };
 
 void RandomMoveEngineSettingsController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -46,7 +49,8 @@ void RandomMoveEngineSettingsController::qt_static_metacall(QObject *_o, QMetaOb
         Q_ASSERT(staticMetaObject.cast(_o));
         RandomMoveEngineSettingsController *_t = static_cast<RandomMoveEngineSettingsController *>(_o);
         switch (_id) {
-        case 0: _t->receiveSettings((*reinterpret_cast< vector<QString>(*)>(_a[1]))); break;
+        case 0: _t->sendCloseWindow(); break;
+        case 1: _t->receiveSettings((*reinterpret_cast< vector<QString>(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -84,10 +88,16 @@ int RandomMoveEngineSettingsController::qt_metacall(QMetaObject::Call _c, int _i
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
+}
+
+// SIGNAL 0
+void RandomMoveEngineSettingsController::sendCloseWindow()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE

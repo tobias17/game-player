@@ -1,5 +1,5 @@
-#ifndef WINDOWCONSTANTS_H_
-#define WINDOWCONSTANTS_H_
+#ifndef WINDOW_CONSTANTS_H_
+#define WINDOW_CONSTANTS_H_
 
 //*****************************************************************************
 
@@ -14,4 +14,4 @@
 
 //*****************************************************************************
 
-#endif /* WINDOWCONSTANTS_H_ */
+#endif /* WINDOW_CONSTANTS_H_ */

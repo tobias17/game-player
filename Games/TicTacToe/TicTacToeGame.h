@@ -1,3 +1,6 @@
+#ifndef TIC_TAC_TOE_GAME_H_
+#define TIC_TAC_TOE_GAME_H_
+
 //*****************************************************************************
 //Includes
 #include "TicTacToeSettings.h"
@@ -22,3 +25,5 @@ private:
 	TicTacToeSettings_t settings;
 	int** board;
 };
+
+#endif /* TIC_TAC_TOE_GAME_H_ */

@@ -60,63 +60,63 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 	}
 	p2List->setCurrentRow(0);
 
-	tttSettingsWindow = new TicTacToeSettingsWindow();
-	connect(tttSettingsWindow, SIGNAL (sendTicTacToeSettings(TicTacToeSettings_t)), this, SLOT (receiveTicTacToeSettings(TicTacToeSettings_t)));
-
 	this->setFixedSize(GAP_SIZE*4 + ITEM_WIDTH*3, GAP_SIZE*4 + LIST_HEIGHT + BUTTON_HEIGHT*2);
 
 }
 
 void MainWindow::gameSettingsButtonHandler() {
-	tttSettingsWindow->hide();
-	tttSettingsWindow->setSettings(tttSettings);
-	tttSettingsWindow->show();
-}
-
-void MainWindow::receiveTicTacToeSettings(TicTacToeSettings_t aSetting) {
-	tttSettings = aSetting;
-}
-
-void MainWindow::p1SettingsButtonHandler() {
-	switch (p1List->currentRow()) {
-	case 1:
-		randomMoveEngineSettingsControllers[p1Index].showWindow(); break;
+	switch (gameList->currentRow()) {
+	case 0:
+		ticTacToeSettingsController.showWindow(); break;
 	default:
-		break;
+		cout << "returning..." << endl; break;
 	}
 }
 
+void MainWindow::p1SettingsButtonHandler() {
+	generalSettingsHandler(p1Index);
+}
+
 void MainWindow::p2SettingsButtonHandler() {
-	switch (p2List->currentRow()) {
+	generalSettingsHandler(p2Index);
+}
+
+void MainWindow::generalSettingsHandler(int index) {
+	if (index < 0 || index >= 3) {
+		return;
+	}
+	int listIndex = (index == p1Index) ? p1List->currentRow() : p2List->currentRow();
+	switch (listIndex) {
 	case 1:
-		randomMoveEngineSettingsControllers[p2Index].showWindow(); break;
+		randomMoveEngineSettingsControllers[index].showWindow(); break;
+	case 2:
+		naiveTreeSearchEngineSettingsControllers[index].showWindow(); break;
 	default:
-		break;
+		cout << "breaking..." << endl; break;
 	}
 }
 
 void MainWindow::startGameButtonHandler() {
-	NaiveTreeSearchEngineSettings_t s;
-	Engine* e1;
-	switch (p1List->currentRow()) {
-	case 1:
-		e1 = new RandomMoveEngine(randomMoveEngineSettingsControllers[p1Index].getSettings()); break;
-	case 2:
-		e1 = new NaiveTreeSearchEngine(s); break;
-	default:
-		e1 = new HumanEngine; break;
+	Engine* engines[2];
+	for (int i = 0; i < 2; i++) {
+		int index = (i == p1Index) ? p1List->currentRow() : p2List->currentRow();
+		switch (index) {
+		case 0:
+			engines[i] = new HumanEngine; break;
+		case 1:
+			engines[i] = new RandomMoveEngine(randomMoveEngineSettingsControllers[p1Index].getSettings()); break;
+		case 2:
+			engines[i] = new NaiveTreeSearchEngine(naiveTreeSearchEngineSettingsControllers[p1Index].getSettings()); break;
+		default:
+			cout << "returning..." << endl; return;
+		}
 	}
-	Engine* e2;
-	switch (p2List->currentRow()) {
-	case 1:
-		e2 = new RandomMoveEngine(randomMoveEngineSettingsControllers[p2Index].getSettings()); break;
-	case 2:
-		e2 = new NaiveTreeSearchEngine(s); break;
-	default:
-		e2 = new HumanEngine; break;
+
+	if (gameList->currentRow() == 0) {
+		TicTacToeSettings_t settings = ticTacToeSettingsController.getSettings();
+		TicTacToeGameWindow* window = new TicTacToeGameWindow(settings, engines[p1Index], engines[p2Index]);
+		window->show();
 	}
-	TicTacToeGameWindow* game = new TicTacToeGameWindow(tttSettings, e1, e2);
-	game->show();
 }
 
 

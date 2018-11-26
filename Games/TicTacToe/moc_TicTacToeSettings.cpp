@@ -1,14 +1,14 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'NaiveTreeSearchEngineSettings.h'
+** Meta object code from reading C++ file 'TicTacToeSettings.h'
 **
 ** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.7)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "NaiveTreeSearchEngineSettings.h"
+#include "TicTacToeSettings.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'NaiveTreeSearchEngineSettings.h' doesn't include <QObject>."
+#error "The header file 'TicTacToeSettings.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.7. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -16,7 +16,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_NaiveTreeSearchEngineSettingsController[] = {
+static const uint qt_meta_data_TicTacToeSettingsController[] = {
 
  // content:
        6,       // revision
@@ -30,24 +30,24 @@ static const uint qt_meta_data_NaiveTreeSearchEngineSettingsController[] = {
        1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      41,   40,   40,   40, 0x05,
+      29,   28,   28,   28, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      59,   40,   40,   40, 0x0a,
+      47,   28,   28,   28, 0x0a,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_NaiveTreeSearchEngineSettingsController[] = {
-    "NaiveTreeSearchEngineSettingsController\0"
-    "\0sendCloseWindow()\0receiveSettings(vector<QString>)\0"
+static const char qt_meta_stringdata_TicTacToeSettingsController[] = {
+    "TicTacToeSettingsController\0\0"
+    "sendCloseWindow()\0receiveSettings(vector<QString>)\0"
 };
 
-void NaiveTreeSearchEngineSettingsController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void TicTacToeSettingsController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
-        NaiveTreeSearchEngineSettingsController *_t = static_cast<NaiveTreeSearchEngineSettingsController *>(_o);
+        TicTacToeSettingsController *_t = static_cast<TicTacToeSettingsController *>(_o);
         switch (_id) {
         case 0: _t->sendCloseWindow(); break;
         case 1: _t->receiveSettings((*reinterpret_cast< vector<QString>(*)>(_a[1]))); break;
@@ -56,33 +56,33 @@ void NaiveTreeSearchEngineSettingsController::qt_static_metacall(QObject *_o, QM
     }
 }
 
-const QMetaObjectExtraData NaiveTreeSearchEngineSettingsController::staticMetaObjectExtraData = {
+const QMetaObjectExtraData TicTacToeSettingsController::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject NaiveTreeSearchEngineSettingsController::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_NaiveTreeSearchEngineSettingsController,
-      qt_meta_data_NaiveTreeSearchEngineSettingsController, &staticMetaObjectExtraData }
+const QMetaObject TicTacToeSettingsController::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_TicTacToeSettingsController,
+      qt_meta_data_TicTacToeSettingsController, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &NaiveTreeSearchEngineSettingsController::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &TicTacToeSettingsController::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *NaiveTreeSearchEngineSettingsController::metaObject() const
+const QMetaObject *TicTacToeSettingsController::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *NaiveTreeSearchEngineSettingsController::qt_metacast(const char *_clname)
+void *TicTacToeSettingsController::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_NaiveTreeSearchEngineSettingsController))
-        return static_cast<void*>(const_cast< NaiveTreeSearchEngineSettingsController*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_TicTacToeSettingsController))
+        return static_cast<void*>(const_cast< TicTacToeSettingsController*>(this));
     return QObject::qt_metacast(_clname);
 }
 
-int NaiveTreeSearchEngineSettingsController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int TicTacToeSettingsController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -96,7 +96,7 @@ int NaiveTreeSearchEngineSettingsController::qt_metacall(QMetaObject::Call _c, i
 }
 
 // SIGNAL 0
-void NaiveTreeSearchEngineSettingsController::sendCloseWindow()
+void TicTacToeSettingsController::sendCloseWindow()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
