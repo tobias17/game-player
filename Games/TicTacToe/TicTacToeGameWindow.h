@@ -1,3 +1,6 @@
+#ifndef TIC_TAC_TOE_GAME_WINDOW_H_
+#define TIC_TAC_TOE_GAME_WINDOW_H_
+
 //*****************************************************************************
 //Includes
 #include <iostream>
@@ -7,17 +10,17 @@
 #include <QPushButton>
 #include <QThread>
 #include "TicTacToeGame.h"
-#include "../../Engines/EngineHandler.h"
 #include "../../Engines/RandomMoveEngine/RandomMoveEngine.h"
+#include "../GameWindow.h"
 
 #define PLAYER_1_CHAR	"X"
 #define PLAYER_2_CHAR	"O"
 
-class TicTacToeGameWindow : public QWidget {
+class TicTacToeGameWindow : public GameWindow {
 	Q_OBJECT
 public:
 	TicTacToeGameWindow(TicTacToeSettings_t, Engine*, Engine*);
-	~TicTacToeGameWindow();
+	~TicTacToeGameWindow() {};
 	void setEngine(Engine*, int player);
 	enum EngineHandlerIndecies { p1Engine, p2Engine };
 signals:
@@ -34,9 +37,7 @@ private:
 	void checkForWinner();
 	QSignalMapper* signalMapper;
 	TicTacToeGame* game;
-	vector<QPushButton*> buttons;
-	QMessageBox* messageBox;
-	EngineHandler* engineHandlers[2];
 	TicTacToeSettings_t settings;
-	QThread workerThread;
 };
+
+#endif /* TIC_TAC_TOE_GAME_WINDOW_H_ */

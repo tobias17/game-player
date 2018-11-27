@@ -9,10 +9,9 @@
 class EngineHandler : public QObject {
 	Q_OBJECT
 public:
-	EngineHandler(Engine* aEngine) : QObject() {
-		engine = aEngine;
-	};
+	EngineHandler(Engine* aEngine) : QObject() { engine = aEngine; };
 	bool getIsEngineHuman() { return engine->getIsHuman(); };
+	void killEngine() { engine->killEngine(); };
 public slots:
 	void getMove(Game* game) { emit sendMove(engine->getMove(game)); };
 signals:

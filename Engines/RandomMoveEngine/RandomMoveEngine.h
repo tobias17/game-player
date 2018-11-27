@@ -3,7 +3,6 @@
 
 //*****************************************************************************
 //Includes
-#include <unistd.h>
 #include "../Engine.h"
 #include "RandomMoveEngineSettings.h"
 

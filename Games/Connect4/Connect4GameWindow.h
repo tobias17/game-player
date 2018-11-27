@@ -13,12 +13,13 @@
 #include "../../Engines/EngineHandler.h"
 #include "../../Engines/RandomMoveEngine/RandomMoveEngine.h"
 #include "Connect4Game.h"
+#include "../GameWindow.h"
 
-class Connect4GameWindow : public QWidget {
+class Connect4GameWindow : public GameWindow {
 	Q_OBJECT
 public:
 	Connect4GameWindow(Connect4Settings_t, Engine*, Engine*);
-	~Connect4GameWindow();
+	~Connect4GameWindow() {};
 	void setEngine(Engine*, int player);
 	enum EngineHandlerIndecies { p1Engine, p2Engine };
 signals:
@@ -31,18 +32,14 @@ private slots:
 	void receiveP1EngineMove(int id);
 	void receiveP2EngineMove(int id);
 private:
+	void updateUI();
+	void checkForWinner();
 	QPalette p1Palette;
 	QPalette p2Palette;
 	QPalette backPalette;
-	void updateUI();
-	void checkForWinner();
 	QSignalMapper* signalMapper;
 	Connect4Game* game;
-	vector<QPushButton*> buttons;
-	QMessageBox* messageBox;
-	EngineHandler* engineHandlers[2];
 	Connect4Settings_t settings;
-	QThread workerThread;
 };
 
 #endif /* CONNECT_4_GAME_WINDOW_H_ */

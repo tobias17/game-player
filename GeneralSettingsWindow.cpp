@@ -25,7 +25,7 @@ GeneralSettingsWindow::GeneralSettingsWindow(vector<QString> names, vector<QStri
 	closeButton->setGeometry(QRect(QPoint(x, y), size));
 
 	connect(saveButton, SIGNAL (released()), this, SLOT (saveButtonHandler()));
-	connect(closeButton, SIGNAL (released()), this, SLOT (closeButtonHandler()));
+	connect(closeButton, SIGNAL (released()), this, SLOT (receiveCloseWindow()));
 
 	int height = max(saveButton->y(), closeButton->y()) + S_GAP_SIZE + S_ITEM_HEIGHT;
 	this->setFixedSize(3*S_GAP_SIZE + 2*S_ITEM_WIDTH, height);
@@ -55,10 +55,6 @@ void GeneralSettingsWindow::saveButtonHandler() {
 		values.push_back(lineEdits.at(i)->text());
 	}
 	emit sendSettings(values);
-}
-
-void GeneralSettingsWindow::closeButtonHandler() {
-	this->close();
 }
 
 void GeneralSettingsWindow::receiveCloseWindow() {

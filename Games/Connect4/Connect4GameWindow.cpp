@@ -1,23 +1,17 @@
 //*****************************************************************************
 //Includes
+#include <unistd.h>
 #include "Connect4GameWindow.h"
 
-Connect4GameWindow::Connect4GameWindow(Connect4Settings_t aSetting, Engine* engine1, Engine* engine2) : QWidget(0) {
+Connect4GameWindow::Connect4GameWindow(Connect4Settings_t aSetting, Engine* engine1, Engine* engine2) : GameWindow(engine1, engine2) {
 	signalMapper = new QSignalMapper;
 	game = new Connect4Game(aSetting);
 	settings = aSetting;
 
-	engineHandlers[p1Engine] = new EngineHandler(engine1);
 	connect(this, SIGNAL (sendP1EngineMove(Game*)), engineHandlers[p1Engine], SLOT (getMove(Game*)));
 	connect(engineHandlers[p1Engine], SIGNAL (sendMove(int)), this, SLOT (receiveP1EngineMove(int)));
-	engineHandlers[p1Engine]->moveToThread(&workerThread);
-
-	engineHandlers[p2Engine] = new EngineHandler(engine2);
 	connect(this, SIGNAL (sendP2EngineMove(Game*)), engineHandlers[p2Engine], SLOT (getMove(Game*)));
 	connect(engineHandlers[p2Engine], SIGNAL (sendMove(int)), this, SLOT (receiveP2EngineMove(int)));
-	engineHandlers[p2Engine]->moveToThread(&workerThread);
-
-	workerThread.start();
 
 	QSize buttonSize = QSize(settings.squareSize, settings.squareSize);
 	for (int y = 0; y < settings.height; y++) {
@@ -37,9 +31,6 @@ Connect4GameWindow::Connect4GameWindow(Connect4Settings_t aSetting, Engine* engi
 	connect(signalMapper, SIGNAL (mapped(int)), this, SLOT (boardButtonHandler(int)));
 	connect(this, SIGNAL (sendMoveRequest()), this, SLOT (recieveMoveRequest()), Qt::QueuedConnection);
 
-	messageBox = new QMessageBox;
-	messageBox->setWindowTitle("Game Over");
-
 	QSize windowSize = QSize((settings.width+1)*settings.gapSize + settings.width*settings.squareSize,
 			(settings.height+1)*settings.gapSize + settings.height*settings.squareSize);
 	this->setFixedSize(windowSize);
@@ -54,10 +45,6 @@ Connect4GameWindow::Connect4GameWindow(Connect4Settings_t aSetting, Engine* engi
 
 	updateUI();
 	emit sendMoveRequest();
-}
-
-Connect4GameWindow::~Connect4GameWindow() {
-	cout << "deleting" << endl;;
 }
 
 void Connect4GameWindow::boardButtonHandler(int id) {

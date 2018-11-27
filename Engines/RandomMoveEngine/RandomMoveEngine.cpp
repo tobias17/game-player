@@ -1,5 +1,6 @@
 //*****************************************************************************
 //Includes
+#include <unistd.h>
 #include "RandomMoveEngine.h"
 
 RandomMoveEngine::RandomMoveEngine(RandomMoveEngineSettings_t aSetting) {
@@ -7,8 +8,11 @@ RandomMoveEngine::RandomMoveEngine(RandomMoveEngineSettings_t aSetting) {
 }
 
 int RandomMoveEngine::getMove(Game* game) {
-	usleep(settings.moveDelay_ms * 1000);
 	vector<int> v = game->getPossibleMoves();
+	for (int i = 0; i < settings.moveDelay_ms; i++) {
+		usleep(1000);
+		if (!isRunning()) return v.at(0);
+	}
 	int i = rand() % v.size();
 	return v.at(i);
 }

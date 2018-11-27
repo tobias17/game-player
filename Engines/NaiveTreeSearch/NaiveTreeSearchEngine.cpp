@@ -14,6 +14,7 @@ int NaiveTreeSearchEngine::getMove(Game* game) {
 	auto start = chrono::steady_clock::now();
 	while (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start).count() < settings.timePerMove_ms) {
 		for (uint start = 0; start < v.size(); start++) {
+			if (!isRunning()) return v.at(0);
 			Game* newGame = game->copy();
 			newGame->makeMove(v.at(start), newGame->getPlayerTurn());
 			while (newGame->getWinner() == Game::none) {
@@ -27,7 +28,6 @@ int NaiveTreeSearchEngine::getMove(Game* game) {
 			}
 		}
 	}
-//	for (uint i = 0; i < v.size(); i++) cout << v.at(i) << ": " << weights[i] << endl;
 	int best = weights[0];
 	int bestMove = v.at(0);
 	for (uint i = 1; i < v.size(); i++) {

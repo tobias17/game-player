@@ -3,6 +3,7 @@ cd Desktop/game-player/
 moc -o moc_MainWindow.cpp MainWindow.h
 moc -o moc_GeneralSettingsWindow.cpp GeneralSettingsWindow.h
 moc -o Engines/moc_EngineHandler.cpp Engines/EngineHandler.h
+moc -o Games/moc_GameWindow.cpp Games/GameWindow.h
 moc -o Games/TicTacToe/moc_TicTacToeGameWindow.cpp Games/TicTacToe/TicTacToeGameWindow.h
 moc -o Games/TicTacToe/moc_TicTacToeSettings.cpp Games/TicTacToe/TicTacToeSettings.h
 moc -o Games/Connect4/moc_Connect4GameWindow.cpp Games/Connect4/Connect4GameWindow.h

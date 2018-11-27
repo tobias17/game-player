@@ -26,7 +26,6 @@ signals:
 	void sendSettings(vector<QString>);
 private slots:
 	void saveButtonHandler();
-	void closeButtonHandler();
 private:
 	vector<QLineEdit*> lineEdits;
 	QPushButton* saveButton;

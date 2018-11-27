@@ -2,23 +2,16 @@
 //Includes
 #include "TicTacToeGameWindow.h"
 
-TicTacToeGameWindow::TicTacToeGameWindow(TicTacToeSettings_t aSetting, Engine* engine1, Engine* engine2) : QWidget(0) {
+TicTacToeGameWindow::TicTacToeGameWindow(TicTacToeSettings_t aSetting, Engine* engine1, Engine* engine2) : GameWindow(engine1, engine2) {
 	signalMapper = new QSignalMapper;
 	game = new TicTacToeGame(aSetting);
 	settings = aSetting;
 	int size = settings.squareCount;
 
-	engineHandlers[p1Engine] = new EngineHandler(engine1);
 	connect(this, SIGNAL (sendP1EngineMove(Game*)), engineHandlers[p1Engine], SLOT (getMove(Game*)));
 	connect(engineHandlers[p1Engine], SIGNAL (sendMove(int)), this, SLOT (receiveP1EngineMove(int)));
-	engineHandlers[p1Engine]->moveToThread(&workerThread);
-
-	engineHandlers[p2Engine] = new EngineHandler(engine2);
 	connect(this, SIGNAL (sendP2EngineMove(Game*)), engineHandlers[p2Engine], SLOT (getMove(Game*)));
 	connect(engineHandlers[p2Engine], SIGNAL (sendMove(int)), this, SLOT (receiveP2EngineMove(int)));
-	engineHandlers[p2Engine]->moveToThread(&workerThread);
-
-	workerThread.start();
 
 	QSize buttonSize = QSize(settings.squareSize, settings.squareSize);
 	for (int y = 0; y < size; y++) {
@@ -35,18 +28,11 @@ TicTacToeGameWindow::TicTacToeGameWindow(TicTacToeSettings_t aSetting, Engine* e
 	connect(signalMapper, SIGNAL (mapped(int)), this, SLOT (boardButtonHandler(int)));
 	connect(this, SIGNAL (sendMoveRequest()), this, SLOT (recieveMoveRequest()), Qt::QueuedConnection);
 
-	messageBox = new QMessageBox;
-	messageBox->setWindowTitle("Game Over");
-
 	QSize windowSize = QSize((size+1)*settings.gapSize + size*settings.squareSize, (size+1)*settings.gapSize + size*settings.squareSize);
 	this->setFixedSize(windowSize);
 	this->setWindowTitle("Tic Tac Toe");
 
 	emit sendMoveRequest();
-}
-
-TicTacToeGameWindow::~TicTacToeGameWindow() {
-	cout << "deleting" << endl;;
 }
 
 void TicTacToeGameWindow::boardButtonHandler(int id) {
