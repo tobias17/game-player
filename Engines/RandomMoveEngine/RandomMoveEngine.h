@@ -4,14 +4,14 @@
 //*****************************************************************************
 //Includes
 #include "../Engine.h"
-#include "RandomMoveEngineSettings.h"
+#include "RandomMoveSettings.h"
 
 class RandomMoveEngine : public Engine {
 public:
-	RandomMoveEngine(RandomMoveEngineSettings_t);
+	RandomMoveEngine(RandomMoveSettings);
 	int getMove(Game*);
 private:
-	RandomMoveEngineSettings_t settings;
+	RandomMoveSettings settings;
 };
 
 #endif /* RANDOM_MOVE_ENGINE_H_ */

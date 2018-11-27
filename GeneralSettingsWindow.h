@@ -11,15 +11,17 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include "WindowConstants.h"
+#include "GeneralSettings.h"
 
 using namespace std;
 
 class GeneralSettingsWindow : public QWidget {
 	Q_OBJECT
 public:
-	GeneralSettingsWindow(vector<QString> names, vector<QString> values, QString windowTitle);
+	GeneralSettingsWindow(GeneralSettings*);
 	void showError(QString);
-	void updateValues(vector<QString>);
+	void updateValues(GeneralSettings*);
+	GeneralSettings* getSettings() { return settings; };
 public slots:
 	void receiveCloseWindow();
 signals:
@@ -27,6 +29,7 @@ signals:
 private slots:
 	void saveButtonHandler();
 private:
+	GeneralSettings* settings;
 	vector<QLineEdit*> lineEdits;
 	QPushButton* saveButton;
 	QPushButton* closeButton;

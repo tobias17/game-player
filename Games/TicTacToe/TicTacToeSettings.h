@@ -3,34 +3,24 @@
 
 //*****************************************************************************
 //Includes
-#include <iostream>
-#include "../../WindowConstants.h"
 #include "../../GeneralSettingsWindow.h"
 
-//*****************************************************************************
-//Defines
+namespace TicTacToeNamespace {
+	enum TicTacToeSettingsNames { squareCount, squaresToWin, squareSize, gapSize };
+}
+using namespace TicTacToeNamespace;
 
-struct TicTacToeSettings_t {
-	int squareCount = 3;
-	int squaresToWin = 3;
-	int squareSize = 100;
-	int gapSize = 8;
-};
-
-class TicTacToeSettingsController : public QObject {
-	Q_OBJECT
+class TicTacToeSettings : public GeneralSettings {
 public:
-	TicTacToeSettingsController();
-	void showWindow();
-	TicTacToeSettings_t getSettings() { return settings; };
-public slots:
-	void receiveSettings(vector<QString>);
-signals:
-	void sendCloseWindow();
-private:
-	TicTacToeSettings_t settings;
-	GeneralSettingsWindow* settingsWindow;
-	void showError(QString text);
+	TicTacToeSettings() : GeneralSettings("Tic Tac Toe Settings", 4) {
+		vars[squareCount]  = new SettingsVariableLowerBound("Square Count", 3, 1);
+		vars[squaresToWin] = new SettingsVariableLowerBound("Squares to Win", 3, 1);
+		vars[squareSize]   = new SettingsVariableLowerBound("Square Size", 100, 1);
+		vars[gapSize]      = new SettingsVariableLowerBound("Gap Size", 8, 1);
+	};
+	virtual ~TicTacToeSettings() {};
+	GeneralSettings* blank() { return new TicTacToeSettings; };
+	bool getIsConsistent() { return (vars[squaresToWin]->getValue() <= vars[squareCount]->getValue()); };
 };
 
 #endif /* TIC_TAC_TOE_SETTINGS_H_ */

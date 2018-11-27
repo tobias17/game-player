@@ -1,41 +1,54 @@
 //*****************************************************************************
 //Includes
-#include <unistd.h>
 #include "Connect4GameWindow.h"
 
-Connect4GameWindow::Connect4GameWindow(Connect4Settings_t aSetting, Engine* engine1, Engine* engine2) : GameWindow(engine1, engine2) {
+Connect4GameWindow::Connect4GameWindow(Connect4Settings aSetting, Engine* engine1, Engine* engine2)
+		: GameWindow(new Connect4Game(aSetting), engine1, engine2) {
+	// initialize the signal mapper and game
 	signalMapper = new QSignalMapper;
 	game = new Connect4Game(aSetting);
+	// set the internal settings to those passed in
 	settings = aSetting;
 
-	connect(this, SIGNAL (sendP1EngineMove(Game*)), engineHandlers[p1Engine], SLOT (getMove(Game*)));
-	connect(engineHandlers[p1Engine], SIGNAL (sendMove(int)), this, SLOT (receiveP1EngineMove(int)));
-	connect(this, SIGNAL (sendP2EngineMove(Game*)), engineHandlers[p2Engine], SLOT (getMove(Game*)));
-	connect(engineHandlers[p2Engine], SIGNAL (sendMove(int)), this, SLOT (receiveP2EngineMove(int)));
-
-	QSize buttonSize = QSize(settings.squareSize, settings.squareSize);
-	for (int y = 0; y < settings.height; y++) {
-		for (int x = 0; x < settings.width; x++) {
+	// create a QSize for all of the buttons
+	QSize buttonSize = QSize(settings.get(squareSize), settings.get(squareSize));
+	// loop through all the buttons that have to be created
+	for (int y = 0; y < settings.get(itemHeight); y++) {
+		for (int x = 0; x < settings.get(itemWidth); x++) {
+			// create a new button with no text
 			QPushButton* button = new QPushButton("", this);
-			QPoint loc = QPoint((x+1)*settings.gapSize + x*settings.squareSize, (y+1)*settings.gapSize + y*settings.squareSize);
+			// create a QPoint for the location of the button
+			QPoint loc = QPoint((x+1)*settings.get(gapSize) + x*settings.get(squareSize),
+					(y+1)*settings.get(gapSize) + y*settings.get(squareSize));
+			// set the button location and size
 			button->setGeometry(QRect(loc, buttonSize));
+			// set auto fill and flat to make the color appear properly
 			button->setAutoFillBackground(true);
 			button->setFlat(true);
+			// set focus policy to no focus so the last pressed button does not turn red
 			button->setFocusPolicy(Qt::NoFocus);
+			// add the button to the vector of buttons
 			buttons.push_back(button);
 
+			// connect the button to the signal mapper and bind it to its id
 			connect(button, SIGNAL (released()), signalMapper, SLOT(map()));
-			signalMapper->setMapping(button, x + y*settings.width);
+			signalMapper->setMapping(button, x + y*settings.get(itemWidth));
 		}
 	}
+	// connect the signal mapper to the button handler
 	connect(signalMapper, SIGNAL (mapped(int)), this, SLOT (boardButtonHandler(int)));
+	// connect the move request and set it to be queued
 	connect(this, SIGNAL (sendMoveRequest()), this, SLOT (recieveMoveRequest()), Qt::QueuedConnection);
 
-	QSize windowSize = QSize((settings.width+1)*settings.gapSize + settings.width*settings.squareSize,
-			(settings.height+1)*settings.gapSize + settings.height*settings.squareSize);
+	// set the window size and title
+	QSize windowSize = QSize((settings.get(itemWidth)+1)*settings.get(gapSize) +
+			settings.get(itemWidth) * settings.get(squareSize),
+			(settings.get(itemHeight)+1) * settings.get(gapSize) +
+			settings.get(itemHeight) * settings.get(squareSize));
 	this->setFixedSize(windowSize);
 	this->setWindowTitle("Connect 4");
 
+	// create the palates to set the buttons to the correct colors
 	p1Palette = buttons.at(0)->palette();
 	p2Palette = buttons.at(0)->palette();
 	backPalette = buttons.at(0)->palette();
@@ -43,97 +56,29 @@ Connect4GameWindow::Connect4GameWindow(Connect4Settings_t aSetting, Engine* engi
 	p2Palette.setColor(QPalette::Button, QColor(Qt::red));
 	backPalette.setColor(QPalette::Button, QColor(Qt::white));
 
+	// update the ui and send a move request
 	updateUI();
-	emit sendMoveRequest();
-}
-
-void Connect4GameWindow::boardButtonHandler(int id) {
-	int playerTurn = game->getPlayerTurn();
-	if (playerTurn == Game::player1 && !engineHandlers[0]->getIsEngineHuman()) {
-		return;
-	} else if (playerTurn == Game::player2 && !engineHandlers[1]->getIsEngineHuman()) {
-		return;
-	}
-	bool worked = game->makeMove(id, playerTurn);
-	if (!worked) return;
-
-	updateUI();
-	checkForWinner();
-	emit sendMoveRequest();
-}
-
-void Connect4GameWindow::checkForWinner() {
-	int winner = game->getWinner();
-	if (winner != Game::none) {
-		if (winner == Game::player1) {
-			messageBox->setText("Player 1 has won the game!");
-		} else if (winner == Game::player2) {
-			messageBox->setText("Player 2 has won the game!");
-		} else {
-			messageBox->setText("The game has ended in a tie.");
-		}
-		messageBox->exec();
-	}
-}
-
-void Connect4GameWindow::recieveMoveRequest() {
-	int playerTurn = game->getPlayerTurn();
-	if (playerTurn == Game::player1) {
-		if (engineHandlers[p1Engine]->getIsEngineHuman()) {
-			return;
-		} else {
-			emit sendP1EngineMove(game);
-		}
-	} else if (playerTurn == Game::player2) {
-		if (engineHandlers[p2Engine]->getIsEngineHuman()) {
-			return;
-		} else {
-			emit sendP2EngineMove(game);
-		}
-	} else {
-		return;
-	}
-}
-
-void Connect4GameWindow::receiveP1EngineMove(int id) {
-	int playerTurn = game->getPlayerTurn();
-	if (playerTurn != Game::player1) {
-		cout << "returning" << endl;
-		return;
-	}
-
-	game->makeMove(id, playerTurn);
-	updateUI();
-	checkForWinner();
-	emit sendMoveRequest();
-}
-
-void Connect4GameWindow::receiveP2EngineMove(int id) {
-	int playerTurn = game->getPlayerTurn();
-	if (playerTurn != Game::player2) {
-		cout << "returning" << endl;
-		return;
-	}
-
-	game->makeMove(id, playerTurn);
-	updateUI();
-	checkForWinner();
 	emit sendMoveRequest();
 }
 
 void Connect4GameWindow::updateUI() {
-	for (int y = 0; y < settings.height; y++) {
-		for (int x = 0; x < settings.width; x++) {
-			int p = game->getSquare(x, y);
-			int i = x + y*settings.width;
+	// loop through all squares
+	for (int y = 0; y < settings.get(itemHeight); y++) {
+		for (int x = 0; x < settings.get(itemWidth); x++) {
+			// get the single int id
+			int id = x + y*settings.get(itemWidth);
+			// get the square value
+			int p = game->getSquare(id);
+			// check to see what player has the square, then set the palate
 			if (p == Game::player1) {
-				buttons.at(i)->setPalette(p1Palette);
+				buttons.at(id)->setPalette(p1Palette);
 			} else if (p == Game::player2) {
-				buttons.at(i)->setPalette(p2Palette);
+				buttons.at(id)->setPalette(p2Palette);
 			} else {
-				buttons.at(i)->setPalette(backPalette);
+				buttons.at(id)->setPalette(backPalette);
 			}
-			buttons.at(i)->update();
+			// update the button
+			buttons.at(id)->update();
 		}
 	}
 }

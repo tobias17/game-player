@@ -5,14 +5,14 @@
 //Includes
 #include <unistd.h>
 #include "../Engine.h"
-#include "NaiveTreeSearchEngineSettings.h"
+#include "NaiveTreeSearchSettings.h"
 
 class NaiveTreeSearchEngine : public Engine {
 public:
-	NaiveTreeSearchEngine(NaiveTreeSearchEngineSettings_t);
-	int getMove(Game*);
+	NaiveTreeSearchEngine(NaiveTreeSearchSettings aSetting);
+	int getMove(Game* aGame);
 private:
-	NaiveTreeSearchEngineSettings_t settings;
+	NaiveTreeSearchSettings settings;
 };
 
 #endif /* NAIVE_TREE_SEARCH_ENGINE_H_ */

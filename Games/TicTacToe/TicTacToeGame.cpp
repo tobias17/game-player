@@ -2,9 +2,9 @@
 //Includes
 #include "TicTacToeGame.h"
 
-TicTacToeGame::TicTacToeGame(TicTacToeSettings_t aSetting) {
+TicTacToeGame::TicTacToeGame(TicTacToeSettings aSetting) {
 	settings = aSetting;
-	int size = settings.squareCount;
+	int size = settings.get(squareCount);
 	board = new int*[size];
 	for (int x = 0; x < size; x++) board[x] = new int[size];
 
@@ -23,7 +23,7 @@ Game* TicTacToeGame::copy() {
 }
 
 void TicTacToeGame::setBoard(int** aBoard) {
-	int size = settings.squareCount;
+	int size = settings.get(squareCount);
 	board = new int*[size];
 	for (int x = 0; x < size; x++) board[x] = new int[size];
 
@@ -35,7 +35,7 @@ void TicTacToeGame::setBoard(int** aBoard) {
 }
 
 bool TicTacToeGame::makeMove(int id, int player) {
-	return makeMove(id%settings.squareCount, id/settings.squareCount, player);
+	return makeMove(id%settings.get(squareCount), id/settings.get(squareCount), player);
 }
 
 bool TicTacToeGame::makeMove(int x, int y, int player) {
@@ -58,7 +58,7 @@ bool TicTacToeGame::makeMove(int x, int y, int player) {
 }
 
 int TicTacToeGame::getWinner() {
-	int size = settings.squareCount;
+	int size = settings.get(squareCount);
 	QPoint dirs[4] = { QPoint(1, 0), QPoint(1, 1), QPoint(0, 1), QPoint(-1, 1) };
 	bool hasAnEmpty = false;
 
@@ -79,7 +79,7 @@ int TicTacToeGame::getWinner() {
 					}
 					if (board[x+dx][y+dy] == player) {
 						streak++;
-						if (player != Game::none && streak == settings.squaresToWin) {
+						if (player != Game::none && streak == settings.get(squaresToWin)) {
 							return player;
 						}
 					} else {
@@ -95,11 +95,12 @@ int TicTacToeGame::getWinner() {
 }
 
 vector<int> TicTacToeGame::getPossibleMoves() {
+	int size = settings.get(squareCount);
 	vector<int> v;
-	for (int y = 0; y < settings.squareCount; y++) {
-		for (int x = 0; x < settings.squareCount; x++) {
+	for (int y = 0; y < size; y++) {
+		for (int x = 0; x < size; x++) {
 			if (board[x][y] == Game::none) {
-				v.push_back(x + y*settings.squareCount);
+				v.push_back(x + y*size);
 			}
 		}
 	}
@@ -107,8 +108,9 @@ vector<int> TicTacToeGame::getPossibleMoves() {
 }
 
 void TicTacToeGame::dispBoard() {
-	for (int y = 0; y < settings.squareCount; y++) {
-		for (int x = 0; x < settings.squareCount; x++) {
+	int size = settings.get(squareCount);
+	for (int y = 0; y < size; y++) {
+		for (int x = 0; x < size; x++) {
 			cout << ((board[x][y] == 0) ? "-" : (board[x][y] == 1) ? "X" : "O");
 		}
 		cout << endl;

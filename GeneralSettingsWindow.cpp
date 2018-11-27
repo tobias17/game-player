@@ -2,13 +2,14 @@
 //Includes
 #include "GeneralSettingsWindow.h"
 
-GeneralSettingsWindow::GeneralSettingsWindow(vector<QString> names, vector<QString> values, QString windowTitle) : QWidget(0) {
+GeneralSettingsWindow::GeneralSettingsWindow(GeneralSettings* aSetting) : QWidget(0) {
+	settings = aSetting;
 	QSize size = QSize(S_ITEM_WIDTH, S_ITEM_HEIGHT);
 
 	int y = S_GAP_SIZE;
 	int x = S_GAP_SIZE;
-	for (uint i = 0; i < names.size(); i++, y += S_GAP_SIZE + S_ITEM_HEIGHT) {
-		QLabel* label = new QLabel(names.at(i), this);
+	for (int i = 0; i < settings->size(); i++, y += S_GAP_SIZE + S_ITEM_HEIGHT) {
+		QLabel* label = new QLabel(settings->getName(i), this);
 		label->setGeometry(QRect(QPoint(x, y), size));
 	}
 	saveButton = new QPushButton("Save", this);
@@ -16,8 +17,8 @@ GeneralSettingsWindow::GeneralSettingsWindow(vector<QString> names, vector<QStri
 
 	y = S_GAP_SIZE;
 	x = 2*S_GAP_SIZE + S_ITEM_WIDTH;
-	for (uint i = 0; i < values.size(); i++, y += S_GAP_SIZE + S_ITEM_HEIGHT) {
-		QLineEdit* lineEdit = new QLineEdit(values.at(i), this);
+	for (int i = 0; i < settings->size(); i++, y += S_GAP_SIZE + S_ITEM_HEIGHT) {
+		QLineEdit* lineEdit = new QLineEdit(QString::number(settings->get(i)), this);
 		lineEdit->setGeometry(QRect(QPoint(x, y), size));
 		lineEdits.push_back(lineEdit);
 	}
@@ -29,16 +30,16 @@ GeneralSettingsWindow::GeneralSettingsWindow(vector<QString> names, vector<QStri
 
 	int height = max(saveButton->y(), closeButton->y()) + S_GAP_SIZE + S_ITEM_HEIGHT;
 	this->setFixedSize(3*S_GAP_SIZE + 2*S_ITEM_WIDTH, height);
-	this->setWindowTitle(windowTitle);
+	this->setWindowTitle(settings->getSettingsName());
 }
 
-void GeneralSettingsWindow::updateValues(vector<QString> values) {
-	if (values.size() != lineEdits.size()) {
-		showError("Incorrect number of values sent to General Settings Window");
+void GeneralSettingsWindow::updateValues(GeneralSettings* aSetting) {
+	if (settings->getSettingsName() != aSetting->getSettingsName()) {
+		showError("Wrong type of setting sent to window");
 		return;
 	}
-	for (uint i = 0; i < values.size(); i++) {
-		lineEdits.at(i)->setText(values.at(i));
+	for (int i = 0; i < aSetting->size(); i++) {
+		lineEdits.at(i)->setText(QString::number(aSetting->get(i)));
 	}
 }
 
@@ -50,11 +51,25 @@ void GeneralSettingsWindow::showError(QString text) {
 }
 
 void GeneralSettingsWindow::saveButtonHandler() {
-	vector<QString> values;
-	for (uint i = 0; i < lineEdits.size(); i++) {
-		values.push_back(lineEdits.at(i)->text());
+	GeneralSettings* newSettings = settings->blank();
+	for (int i = 0; i < settings->size(); i++) {
+		bool ok;
+		bool good = newSettings->set(i, lineEdits[i]->text().toInt(&ok));
+		if (!ok) {
+			showError("Error converting " + newSettings->getName(i) + " to integer");
+			return;
+		}
+		if (!good) {
+			showError(newSettings->getName(i) + " value not in range");
+			return;
+		}
 	}
-	emit sendSettings(values);
+	if (!newSettings->getIsConsistent()) {
+		showError("Values are not consistent");
+		return;
+	}
+	settings = newSettings;
+	this->close();
 }
 
 void GeneralSettingsWindow::receiveCloseWindow() {

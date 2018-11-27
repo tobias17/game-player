@@ -22,26 +22,51 @@ static const uint qt_meta_data_GameWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       3,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      12,   11,   11,   11, 0x05,
+      30,   11,   11,   11, 0x05,
+      54,   11,   11,   11, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+      81,   78,   11,   11, 0x08,
+     105,   11,   11,   11, 0x08,
+     126,   78,   11,   11, 0x08,
+     151,   78,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_GameWindow[] = {
-    "GameWindow\0"
+    "GameWindow\0\0sendMoveRequest()\0"
+    "sendP1EngineMove(Game*)\0sendP2EngineMove(Game*)\0"
+    "id\0boardButtonHandler(int)\0"
+    "recieveMoveRequest()\0receiveP1EngineMove(int)\0"
+    "receiveP2EngineMove(int)\0"
 };
 
 void GameWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        GameWindow *_t = static_cast<GameWindow *>(_o);
+        switch (_id) {
+        case 0: _t->sendMoveRequest(); break;
+        case 1: _t->sendP1EngineMove((*reinterpret_cast< Game*(*)>(_a[1]))); break;
+        case 2: _t->sendP2EngineMove((*reinterpret_cast< Game*(*)>(_a[1]))); break;
+        case 3: _t->boardButtonHandler((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->recieveMoveRequest(); break;
+        case 5: _t->receiveP1EngineMove((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->receiveP2EngineMove((*reinterpret_cast< int(*)>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData GameWindow::staticMetaObjectExtraData = {
@@ -75,6 +100,31 @@ int GameWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 7)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 7;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void GameWindow::sendMoveRequest()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
+}
+
+// SIGNAL 1
+void GameWindow::sendP1EngineMove(Game * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void GameWindow::sendP2EngineMove(Game * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_END_MOC_NAMESPACE

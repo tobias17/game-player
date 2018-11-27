@@ -11,16 +11,28 @@
 class GameWindow : public QWidget {
 	Q_OBJECT
 public:
-	GameWindow(Engine*, Engine*);
+	GameWindow(Game*, Engine*, Engine*);
 	~GameWindow() {};
 	void setEngine(Engine*, int player);
 	enum EngineHandlerIndecies { p1Engine, p2Engine };
+signals:
+	void sendMoveRequest();
+	void sendP1EngineMove(Game*);
+	void sendP2EngineMove(Game*);
+private slots:
+	void boardButtonHandler(int id);
+	void recieveMoveRequest();
+	void receiveP1EngineMove(int id);
+	void receiveP2EngineMove(int id);
 protected:
+	Game* game;
 	vector<QPushButton*> buttons;
 	QMessageBox* messageBox;
 	EngineHandler* engineHandlers[2];
 	QThread workerThread;
 private:
+	virtual void updateUI() = 0;
+	void checkForWinner();
 	void closeEvent(QCloseEvent *bar);
 };
 

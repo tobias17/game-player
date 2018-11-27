@@ -19,25 +19,16 @@
 class TicTacToeGameWindow : public GameWindow {
 	Q_OBJECT
 public:
-	TicTacToeGameWindow(TicTacToeSettings_t, Engine*, Engine*);
+	TicTacToeGameWindow(TicTacToeSettings, Engine*, Engine*);
 	~TicTacToeGameWindow() {};
 	void setEngine(Engine*, int player);
 	enum EngineHandlerIndecies { p1Engine, p2Engine };
-signals:
-	void sendMoveRequest();
-	void sendP1EngineMove(Game*);
-	void sendP2EngineMove(Game*);
-private slots:
-	void boardButtonHandler(int id);
-	void recieveMoveRequest();
-	void receiveP1EngineMove(int id);
-	void receiveP2EngineMove(int id);
 private:
 	void updateUI();
-	void checkForWinner();
+//	void checkForWinner();
 	QSignalMapper* signalMapper;
-	TicTacToeGame* game;
-	TicTacToeSettings_t settings;
+//	TicTacToeGame* game;
+	TicTacToeSettings settings;
 };
 
 #endif /* TIC_TAC_TOE_GAME_WINDOW_H_ */

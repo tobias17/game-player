@@ -13,6 +13,13 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 	engines.push_back("Random Moves");
 	engines.push_back("Naive Tree Search");
 
+	ticTacToeSettingsWindow = new GeneralSettingsWindow(new TicTacToeSettings());
+	connect4SettingsWindow = new GeneralSettingsWindow(new Connect4Settings());
+	for (int i = p1Index; i <= p2Index; i++) {
+		randomMoveSettingsWindows[i] = new GeneralSettingsWindow(new RandomMoveSettings());
+		naiveTreeSearchSettingsWindows[i] = new GeneralSettingsWindow(new NaiveTreeSearchSettings());
+	}
+
 	gameList = new QListWidget(this);
 	gameList->setGeometry(QRect(QPoint(GAP_SIZE, GAP_SIZE), QSize(ITEM_WIDTH, LIST_HEIGHT)));
 	p1List = new QListWidget(this);
@@ -62,15 +69,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 	p2List->setCurrentRow(0);
 
 	this->setFixedSize(GAP_SIZE*4 + ITEM_WIDTH*3, GAP_SIZE*4 + LIST_HEIGHT + BUTTON_HEIGHT*2);
-
 }
 
 void MainWindow::gameSettingsButtonHandler() {
 	switch (gameList->currentRow()) {
 	case 0:
-		ticTacToeSettingsController.showWindow(); break;
+		ticTacToeSettingsWindow->show(); break;
 	case 1:
-		connect4SettingsController.showWindow(); break;
+		connect4SettingsWindow->show(); break;
 	default:
 		cout << "returning..." << endl; break;
 	}
@@ -91,9 +97,9 @@ void MainWindow::generalSettingsHandler(int index) {
 	int listIndex = (index == p1Index) ? p1List->currentRow() : p2List->currentRow();
 	switch (listIndex) {
 	case 1:
-		randomMoveEngineSettingsControllers[index].showWindow(); break;
+		randomMoveSettingsWindows[index]->show(); break;
 	case 2:
-		naiveTreeSearchEngineSettingsControllers[index].showWindow(); break;
+		naiveTreeSearchSettingsWindows[index]->show(); break;
 	default:
 		cout << "breaking..." << endl; break;
 	}
@@ -107,20 +113,20 @@ void MainWindow::startGameButtonHandler() {
 		case 0:
 			engines[i] = new HumanEngine; break;
 		case 1:
-			engines[i] = new RandomMoveEngine(randomMoveEngineSettingsControllers[p1Index].getSettings()); break;
+			engines[i] = new RandomMoveEngine(*((RandomMoveSettings*)randomMoveSettingsWindows[i]->getSettings())); break;
 		case 2:
-			engines[i] = new NaiveTreeSearchEngine(naiveTreeSearchEngineSettingsControllers[p1Index].getSettings()); break;
+			engines[i] = new NaiveTreeSearchEngine(*((NaiveTreeSearchSettings*)naiveTreeSearchSettingsWindows[i]->getSettings())); break;
 		default:
 			cout << "returning..." << endl; return;
 		}
 	}
 
 	if (gameList->currentRow() == 0) {
-		TicTacToeSettings_t settings = ticTacToeSettingsController.getSettings();
+		TicTacToeSettings settings = *((TicTacToeSettings*)ticTacToeSettingsWindow->getSettings());
 		TicTacToeGameWindow* window = new TicTacToeGameWindow(settings, engines[p1Index], engines[p2Index]);
 		window->show();
 	} else if (gameList->currentRow() == 1) {
-		Connect4Settings_t settings = connect4SettingsController.getSettings();
+		Connect4Settings settings = *((Connect4Settings*)connect4SettingsWindow->getSettings());
 		Connect4GameWindow* window = new Connect4GameWindow(settings, engines[p1Index], engines[p2Index]);
 		window->show();
 	}

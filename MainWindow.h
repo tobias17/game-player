@@ -46,12 +46,12 @@ private:
 	vector<QString> engines;
 
 	// games
-	TicTacToeSettingsController ticTacToeSettingsController;
-	Connect4SettingsController connect4SettingsController;
+	GeneralSettingsWindow* ticTacToeSettingsWindow;
+	GeneralSettingsWindow* connect4SettingsWindow;
 
 	// engines
-	RandomMoveEngineSettingsController randomMoveEngineSettingsControllers[2];
-	NaiveTreeSearchEngineSettingsController naiveTreeSearchEngineSettingsControllers[2];
+	GeneralSettingsWindow* randomMoveSettingsWindows[2];
+	GeneralSettingsWindow* naiveTreeSearchSettingsWindows[2];
 };
 
 //*****************************************************************************
