@@ -12,6 +12,7 @@
 #include <QPushButton>
 #include "WindowConstants.h"
 #include "Games/TicTacToe/TicTacToeGameWindow.h"
+#include "Games/Connect4/Connect4GameWindow.h"
 #include "Engines/RandomMoveEngine/RandomMoveEngine.h"
 #include "Engines/NaiveTreeSearch/NaiveTreeSearchEngine.h"
 
@@ -46,6 +47,7 @@ private:
 
 	// games
 	TicTacToeSettingsController ticTacToeSettingsController;
+	Connect4SettingsController connect4SettingsController;
 
 	// engines
 	RandomMoveEngineSettingsController randomMoveEngineSettingsControllers[2];

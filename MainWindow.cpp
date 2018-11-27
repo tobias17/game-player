@@ -7,6 +7,7 @@ using namespace std;
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 	games.push_back("Tic Tac Toe");
+	games.push_back("Connect 4");
 
 	engines.push_back("Human");
 	engines.push_back("Random Moves");
@@ -68,6 +69,8 @@ void MainWindow::gameSettingsButtonHandler() {
 	switch (gameList->currentRow()) {
 	case 0:
 		ticTacToeSettingsController.showWindow(); break;
+	case 1:
+		connect4SettingsController.showWindow(); break;
 	default:
 		cout << "returning..." << endl; break;
 	}
@@ -115,6 +118,10 @@ void MainWindow::startGameButtonHandler() {
 	if (gameList->currentRow() == 0) {
 		TicTacToeSettings_t settings = ticTacToeSettingsController.getSettings();
 		TicTacToeGameWindow* window = new TicTacToeGameWindow(settings, engines[p1Index], engines[p2Index]);
+		window->show();
+	} else if (gameList->currentRow() == 1) {
+		Connect4Settings_t settings = connect4SettingsController.getSettings();
+		Connect4GameWindow* window = new Connect4GameWindow(settings, engines[p1Index], engines[p2Index]);
 		window->show();
 	}
 }

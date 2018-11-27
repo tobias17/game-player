@@ -40,6 +40,7 @@ bool TicTacToeGame::makeMove(int id, int player) {
 
 bool TicTacToeGame::makeMove(int x, int y, int player) {
 	if (player != playerTurn) return false;
+	if (board[x][y] != Game::none) return false;
 
 	board[x][y] = player;
 

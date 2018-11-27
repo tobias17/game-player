@@ -5,5 +5,7 @@ moc -o moc_GeneralSettingsWindow.cpp GeneralSettingsWindow.h
 moc -o Engines/moc_EngineHandler.cpp Engines/EngineHandler.h
 moc -o Games/TicTacToe/moc_TicTacToeGameWindow.cpp Games/TicTacToe/TicTacToeGameWindow.h
 moc -o Games/TicTacToe/moc_TicTacToeSettings.cpp Games/TicTacToe/TicTacToeSettings.h
+moc -o Games/Connect4/moc_Connect4GameWindow.cpp Games/Connect4/Connect4GameWindow.h
+moc -o Games/Connect4/moc_Connect4Settings.cpp Games/Connect4/Connect4Settings.h
 moc -o Engines/RandomMoveEngine/moc_RandomMoveEngineSettings.cpp Engines/RandomMoveEngine/RandomMoveEngineSettings.h
-moc -o Engines/NaiveTreeSearch/moc_RandomMoveEngineSettings.cpp Engines/NaiveTreeSearch/RandomMoveEngineSettings.h
+moc -o Engines/NaiveTreeSearch/moc_NaiveTreeSearchEngineSettings.cpp Engines/NaiveTreeSearch/NaiveTreeSearchEngineSettings.h
