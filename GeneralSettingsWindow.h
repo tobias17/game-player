@@ -20,7 +20,7 @@ class GeneralSettingsWindow : public QWidget {
 public:
 	GeneralSettingsWindow(GeneralSettings*);
 	void showError(QString);
-	void updateValues(GeneralSettings*);
+	void updateAndShow();
 	GeneralSettings* getSettings() { return settings; };
 public slots:
 	void receiveCloseWindow();
