@@ -34,7 +34,7 @@ public:
 		variableCount = aVariableCount;
 		vars = new SettingsVariable*[variableCount];
 	};
-	virtual ~GeneralSettings() {};
+	virtual ~GeneralSettings();
 	QString getSettingsName() { return settingsName; };
 	int size() { return variableCount; };
 	QString getName(int index) { return vars[index]->getName(); };

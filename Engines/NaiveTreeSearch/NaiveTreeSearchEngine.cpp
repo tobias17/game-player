@@ -44,6 +44,9 @@ int NaiveTreeSearchEngine::getMove(Game* game) {
 				// if the engine lost the game, decrement the weight for the starting move
 				weights[start]--;
 			}
+
+			// delete game to remove it from heap
+			delete newGame;
 		}
 	}
 	// initialize variables to find best weight
@@ -58,6 +61,7 @@ int NaiveTreeSearchEngine::getMove(Game* game) {
 			bestMove = v.at(i);
 		}
 	}
+
 	// return the move with the highest weight
 	return bestMove;
 }

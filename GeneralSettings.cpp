@@ -2,6 +2,15 @@
 //Includes
 #include "GeneralSettings.h"
 
+GeneralSettings::~GeneralSettings() {
+//	// loop through the vars and delete them
+//	for (int i = 0; i < variableCount; i++) {
+//		delete[] vars[i];
+//	}
+//	// delete the vars container
+//	delete[] vars;
+}
+
 SettingsVariable::SettingsVariable() {
 	// set default values - shows an error elsewhere in the code
 	name = "error";

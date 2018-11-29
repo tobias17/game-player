@@ -20,14 +20,37 @@ TicTacToeGame::TicTacToeGame(TicTacToeSettings aSetting) {
 	}
 }
 
+TicTacToeGame::TicTacToeGame(TicTacToeGame* aGame) {
+	// set the internal settings and player turn to the passed in game's
+	settings = aGame->getSettings();
+	playerTurn = aGame->getPlayerTurn();
+	// set the size equal to the square count
+	int size = settings.get(squareCount);
+
+	// create a new game board
+	board = new int*[size];
+	for (int x = 0; x < size; x++) board[x] = new int[size];
+
+	// initialize the board to be what the game passed in's is
+	for (int y = 0; y < size; y++) {
+		for (int x = 0; x < size; x++) {
+			board[x][y] = aGame->getSquare(x, y);
+		}
+	}
+}
+
+TicTacToeGame::~TicTacToeGame() {
+	// loop through all rows and delete them
+	for (int i = 0; i < settings.get(squareCount); i++) {
+		delete[] board[i];
+	}
+	// delete the board itself
+	delete[] board;
+}
+
 Game* TicTacToeGame::copy() {
-	// create a new game
-	TicTacToeGame* newGame = new TicTacToeGame(settings);
-	// set the board and player turn of the new board to this one's
-	newGame->setBoard(board);
-	newGame->setPlayerTurn(playerTurn);
-	// return the new game
-	return (Game*) newGame;
+	// create a new board and return it
+	return (Game*) new TicTacToeGame(this);
 }
 
 void TicTacToeGame::setBoard(int** aBoard) {
